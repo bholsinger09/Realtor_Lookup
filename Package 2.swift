@@ -6,18 +6,13 @@ import PackageDescription
 let package = Package(
     name: "PackageManager",
     platforms: [
-        .macOS(.v11)
-    ],
-    products: [
-        .library(
-            name: "PackageManager",
-            targets: ["PackageManager"]
-        ),
+        .macOS(.v10_15)
     ],
     targets: [
-        .target(
-            name: "PackageManager"
-        ),
+        // Targets are the basic building blocks of a package, defining a module or a test suite.
+        // Targets can depend on other targets in this package and products from dependencies.
+        .executableTarget(
+            name: "PackageManager"),
         .testTarget(
             name: "PackageManagerTests",
             dependencies: ["PackageManager"],
