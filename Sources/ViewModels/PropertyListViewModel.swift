@@ -1,14 +1,26 @@
 import Foundation
 
 public class PropertyListViewModel: ObservableObject {
-    @Published public private(set) var properties: [Property]
+    @Published public private(set) var allProperties: [Property]
+    @Published public var filteredProperties: [Property]
+    @Published public var searchZip: String = "" {
+        didSet { filterProperties() }
+    }
     public init(properties: [Property] = []) {
-        self.properties = properties
+        self.allProperties = properties
+        self.filteredProperties = properties
     }
     public func addProperty(_ property: Property) {
-        properties.append(property)
+        allProperties.append(property)
+        filterProperties()
     }
     public func removeProperty(_ property: Property) {
-        properties.removeAll { $0.id == property.id }
+        allProperties.removeAll { $0.id == property.id }
+        filterProperties()
+    }
+    public func filterProperties() {
+        filteredProperties = allProperties.filter { property in
+            (searchZip.isEmpty || property.zipCode.contains(searchZip)) && property.status == .forSale
+        }
     }
 }

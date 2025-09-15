@@ -6,8 +6,15 @@ public struct PropertyListView: View {
         self.viewModel = viewModel
     }
     public var body: some View {
-        List(viewModel.properties) { property in
-            PropertyRowView(property: property)
+        VStack {
+            HStack {
+                TextField("Search by zip code", text: $viewModel.searchZip)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding([.leading, .trailing])
+            }
+            List(viewModel.filteredProperties) { property in
+                PropertyRowView(property: property)
+            }
         }
         .navigationTitle("Properties")
     }
